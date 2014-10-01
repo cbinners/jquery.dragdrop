@@ -62,14 +62,18 @@ jQuery ->
         break if window.convertPointFromPageToNode and window.convertPointFromNodeToPage and window.Point
 
       unless window.Point
-        # TODO: Implement Point() polyfill'
-        throw '[jQuery DragDrop] TODO: Implement Point() polyfill'
+        window.Point = class
+          constructor: (@x = 0, @y = 0, @z = 0) ->
+
       unless window.convertPointFromPageToNode
-        # TODO: Implement convertPointFromPageToNode() polyfill
-        throw '[jQuery DragDrop] TODO: Implement convertPointFromPageToNode() polyfill'
+        window.convertPointFromPageToNode = (node, point) ->
+          offset = $(node).offset()
+          return new Point(point.x - offset.left, point.y - offset.top)
+
       unless window.convertPointFromNodeToPage
-        # TODO: Implement convertPointFromNodeToPage() polyfill
-        throw '[jQuery DragDrop] TODO: Implement convertPointFromNodeToPage() polyfill'
+        window.convertPointFromNodeToPage = (node, point) ->
+          offset = $(node).offset()
+          return new Point(offset.left + point.x, offset.top + point.y)
 
       # Prevent this function from running again
       implementConvertPointPolyfill = -> #noop
