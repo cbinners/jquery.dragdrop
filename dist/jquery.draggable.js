@@ -163,13 +163,30 @@
           }
         }
         if (!window.Point) {
-          throw '[jQuery DragDrop] TODO: Implement Point() polyfill';
+          window.Point = (function() {
+            function _Class(x, y, z) {
+              this.x = x != null ? x : 0;
+              this.y = y != null ? y : 0;
+              this.z = z != null ? z : 0;
+            }
+
+            return _Class;
+
+          })();
         }
         if (!window.convertPointFromPageToNode) {
-          throw '[jQuery DragDrop] TODO: Implement convertPointFromPageToNode() polyfill';
+          window.convertPointFromPageToNode = function(node, point) {
+            var offset;
+            offset = $(node).offset();
+            return new Point(point.x - offset.left, point.y - offset.top);
+          };
         }
         if (!window.convertPointFromNodeToPage) {
-          throw '[jQuery DragDrop] TODO: Implement convertPointFromNodeToPage() polyfill';
+          window.convertPointFromNodeToPage = function(node, point) {
+            var offset;
+            offset = $(node).offset();
+            return new Point(offset.left + point.x, offset.top + point.y);
+          };
         }
         return implementConvertPointPolyfill = function() {};
       };
