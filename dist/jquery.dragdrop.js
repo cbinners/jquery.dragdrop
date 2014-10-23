@@ -152,22 +152,20 @@
       };
 
       implementConvertPointPolyfill = function() {
-        var vendor, _i, _len;
-        ({
-          fastBounds: function(elem) {
-            var offsetLeft, offsetTop;
-            offsetLeft = elem.offsetLeft - elem.scrollLeft;
-            offsetTop = elem.offsetTop - elem.scrollTop;
-            while (elem = elem.offsetParent) {
-              offsetLeft += (elem.offsetLeft || 0) - elem.scrollLeft;
-              offsetTop += (elem.offsetTop || 0) - elem.scrollTop;
-            }
-            return {
-              left: Math.round(offsetLeft),
-              top: Math.round(offsetTop)
-            };
+        var fastBounds, vendor, _i, _len;
+        fastBounds = function(elem) {
+          var offsetLeft, offsetTop;
+          offsetLeft = elem.offsetLeft - elem.scrollLeft;
+          offsetTop = elem.offsetTop - elem.scrollTop;
+          while (elem = elem.offsetParent) {
+            offsetLeft += (elem.offsetLeft || 0) - elem.scrollLeft;
+            offsetTop += (elem.offsetTop || 0) - elem.scrollTop;
           }
-        });
+          return {
+            left: Math.round(offsetLeft),
+            top: Math.round(offsetTop)
+          };
+        };
         for (_i = 0, _len = vendors.length; _i < _len; _i++) {
           vendor = vendors[_i];
           window.convertPointFromPageToNode || (window.convertPointFromPageToNode = window[vendor + "ConvertPointFromPageToNode"]);

@@ -54,7 +54,7 @@ jQuery ->
     #
 
     implementConvertPointPolyfill = ->
-      fastBounds: (elem) ->
+      fastBounds = (elem) ->
         offsetLeft = elem.offsetLeft - elem.scrollLeft
         offsetTop = elem.offsetTop - elem.scrollTop
         while elem = elem.offsetParent
