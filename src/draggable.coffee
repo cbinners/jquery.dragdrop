@@ -54,13 +54,13 @@ jQuery ->
     #
 
     implementConvertPointPolyfill = ->
-      fastBounds = (elem) ->
-        offsetLeft = elem.offsetLeft
-        offsetTop = elem.offsetTop
+      fastBounds: (elem) ->
+        offsetLeft = elem.offsetLeft - elem.scrollLeft
+        offsetTop = elem.offsetTop - elem.scrollTop
         while elem = elem.offsetParent
-          offsetLeft += elem.offsetLeft or 0
-          offsetTop += elem.offsetTop or 0
-        {left: offsetLeft, top: offsetTop}
+          offsetLeft += (elem.offsetLeft or 0) - elem.scrollLeft
+          offsetTop += (elem.offsetTop or 0) - elem.scrollTop
+        {left: Math.round(offsetLeft), top: Math.round(offsetTop)}
 
       for vendor in vendors
         window.convertPointFromPageToNode ||= window[vendor + "ConvertPointFromPageToNode"]
