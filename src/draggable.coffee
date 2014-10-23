@@ -54,6 +54,13 @@ jQuery ->
     #
 
     implementConvertPointPolyfill = ->
+      fastBounds = (elem) ->
+        offsetLeft = elem.offsetLeft
+        offsetTop = elem.offsetTop
+        while elem = elem.offsetParent
+          offsetLeft += elem.offsetLeft or 0
+          offsetTop += elem.offsetTop or 0
+        {left: offsetLeft, top: offsetTop}
 
       for vendor in vendors
         window.convertPointFromPageToNode ||= window[vendor + "ConvertPointFromPageToNode"]
@@ -67,12 +74,12 @@ jQuery ->
 
       unless window.convertPointFromPageToNode
         window.convertPointFromPageToNode = (node, point) ->
-          offset = $(node).offset()
+          offset = fastBounds(node)
           return new Point(point.x - offset.left, point.y - offset.top)
 
       unless window.convertPointFromNodeToPage
         window.convertPointFromNodeToPage = (node, point) ->
-          offset = $(node).offset()
+          offset = fastBounds(node)
           return new Point(offset.left + point.x, offset.top + point.y)
 
       # Prevent this function from running again

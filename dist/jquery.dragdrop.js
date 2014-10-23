@@ -152,7 +152,20 @@
       };
 
       implementConvertPointPolyfill = function() {
-        var vendor, _i, _len;
+        var fastBounds, vendor, _i, _len;
+        fastBounds = function(elem) {
+          var offsetLeft, offsetTop;
+          offsetLeft = elem.offsetLeft;
+          offsetTop = elem.offsetTop;
+          while (elem = elem.offsetParent) {
+            offsetLeft += elem.offsetLeft || 0;
+            offsetTop += elem.offsetTop || 0;
+          }
+          return {
+            left: offsetLeft,
+            top: offsetTop
+          };
+        };
         for (_i = 0, _len = vendors.length; _i < _len; _i++) {
           vendor = vendors[_i];
           window.convertPointFromPageToNode || (window.convertPointFromPageToNode = window[vendor + "ConvertPointFromPageToNode"]);
@@ -177,14 +190,14 @@
         if (!window.convertPointFromPageToNode) {
           window.convertPointFromPageToNode = function(node, point) {
             var offset;
-            offset = $(node).offset();
+            offset = fastBounds(node);
             return new Point(point.x - offset.left, point.y - offset.top);
           };
         }
         if (!window.convertPointFromNodeToPage) {
           window.convertPointFromNodeToPage = function(node, point) {
             var offset;
-            offset = $(node).offset();
+            offset = fastBounds(node);
             return new Point(offset.left + point.x, offset.top + point.y);
           };
         }
