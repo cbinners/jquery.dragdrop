@@ -11,7 +11,7 @@
     function dragdrop() {}
 
     getCSSEdge = function(edge, oppositeEdge, $element) {
-      return parseFloat($element.css(edge)) || (parseFloat($element.css(oppositeEdge)) ? $element.position()[edge] : null || 0);
+      return parseFloat($element.get(0).style[edge] || $element.css(edge)) || (parseFloat($element.get(0).style[oppositeEdge] || $element.css(oppositeEdge)) ? $element.position()[edge] : null || 0);
     };
 
     dragdrop.prototype.getCSSLeft = function($element) {

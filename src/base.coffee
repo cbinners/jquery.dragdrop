@@ -7,9 +7,9 @@ class jQuery.dragdrop
 
   getCSSEdge = (edge, oppositeEdge, $element) ->
     # See if there exists a numeric value for the target edge
-    parseFloat($element.css(edge)) or
+    parseFloat($element.get(0).style[edge] || $element.css(edge)) or
     # If not, see if there is a numeric value for the opposite edge, then rely on jQuery.position to get the target edge
-    if parseFloat($element.css(oppositeEdge)) then $element.position()[edge] else null or
+    if parseFloat($element.get(0).style[oppositeEdge] || $element.css(oppositeEdge)) then $element.position()[edge] else null or
     # Otherwise, return zero
     0
   getCSSLeft: ($element) -> getCSSEdge('left', 'right', $element)
