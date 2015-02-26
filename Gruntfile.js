@@ -87,7 +87,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
   // Default and Build tasks
-  mainTasks = ['coffee', 'growl:coffee', 'jasmine', 'growl:jasmine']
+  mainTasks = ['coffee', 'growl:coffee']
   grunt.registerTask('default', mainTasks);
   grunt.registerTask('build', mainTasks.concat(['uglify']));
 

@@ -817,7 +817,7 @@
         this.dragStarted = true;
         this.draggable = draggable;
         this.$helper = this.draggable.$helper;
-        elementUnderMouse = document.elementFromPoint(e.originalEvent.clientX, e.originalEvent.clientY);
+        elementUnderMouse = draggable;
         $closestDroppableUnderMouse = getClosestDroppable(elementUnderMouse);
         if (this.$element.is($closestDroppableUnderMouse)) {
           this.handleOver(e);

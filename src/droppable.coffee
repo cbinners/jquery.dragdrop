@@ -120,7 +120,7 @@ jQuery ->
       @$helper = @draggable.$helper
 
       # Did this drag start over top of this droppable?
-      elementUnderMouse = document.elementFromPoint(e.originalEvent.clientX, e.originalEvent.clientY)
+      elementUnderMouse = draggable #document.elementFromPoint(e.originalEvent.clientX, e.originalEvent.clientY)
       $closestDroppableUnderMouse = getClosestDroppable(elementUnderMouse)
 
       # If this drag started over top of this droppable, handle the over event right away
