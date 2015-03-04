@@ -216,7 +216,6 @@
 
       function draggable(element, options) {
         this.options = options != null ? options : {};
-        this.handleElementClick = __bind(this.handleElementClick, this);
         this.handleDocumentMouseUp = __bind(this.handleDocumentMouseUp, this);
         this.handleDocumentMouseMove = __bind(this.handleDocumentMouseMove, this);
         this.handleElementMouseDown = __bind(this.handleElementMouseDown, this);
@@ -224,8 +223,7 @@
         implementRequestAnimationFramePolyfill();
         this.$element = $(element);
         this.$element.on({
-          mousedown: this.handleElementMouseDown,
-          click: this.handleElementClick
+          mousedown: this.handleElementMouseDown
         }).addClass(this.getConfig().draggableClass);
         this;
       }
@@ -258,7 +256,6 @@
           return;
         }
         this.cancelAnyScheduledDrag();
-        this.shouldCancelClick = false;
         if (this.isCancelingAgent(e.target)) {
           return;
         }
@@ -311,13 +308,6 @@
           return;
         }
         return this.handleDragStop(e);
-      };
-
-      draggable.prototype.handleElementClick = function(e) {
-        if (this.shouldCancelClick) {
-          e.stopImmediatePropagation();
-          return false;
-        }
       };
 
       draggable.prototype.handleDragStart = function(e) {
@@ -471,7 +461,6 @@
         if (this.dragStarted) {
           delete jQuery.draggable.draggableAloft;
           delete jQuery.draggable.latestEvent;
-          this.shouldCancelClick = !!this.dragStarted;
           dragStopEvent = this.synthesizeEvent('dragstop', e);
           eventMetadata = this.getEventMetadata();
           if (typeof (_base = this.getConfig()).stop === "function") {
