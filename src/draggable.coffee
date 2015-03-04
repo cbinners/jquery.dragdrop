@@ -141,7 +141,6 @@ jQuery ->
         # Attach the element event handlers
         .on
           mousedown: @handleElementMouseDown
-          click: @handleElementClick
 
         # Mark this element as draggable with a class
         .addClass(@getConfig().draggableClass)
@@ -174,9 +173,6 @@ jQuery ->
       return unless isLeftButton # Left clicks only, please
 
       @cancelAnyScheduledDrag()
-
-      # Until told otherwise, the interaction started by this mousedown should not cancel any subsequent click event
-      @shouldCancelClick = false
 
       # Bail if a canceling agent has been clicked on
       return if @isCancelingAgent(e.target)
@@ -239,13 +235,6 @@ jQuery ->
 
       # Trigger the stop event
       @handleDragStop(e)
-
-    handleElementClick: (e) =>
-      # Clicks should be cancelled if the last mousedown/mouseup interaction resulted in a drag
-      if @shouldCancelClick
-        # Cancel the click
-        e.stopImmediatePropagation()
-        false
 
     #
     # Draggable events
@@ -527,9 +516,6 @@ jQuery ->
         # The draggable is no longer aloft
         delete jQuery.draggable.draggableAloft
         delete jQuery.draggable.latestEvent
-
-        # Lest a click event occur before cleanup is called, decide whether it should be permitted or not
-        @shouldCancelClick = !!@dragStarted
 
         # Synthesize a new event to represent this drag start
         dragStopEvent = @synthesizeEvent('dragstop', e)
