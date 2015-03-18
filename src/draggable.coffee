@@ -242,9 +242,9 @@ jQuery ->
     handleElementClick: (e) =>
       # Clicks should be cancelled if the last mousedown/mouseup interaction resulted in a drag
       if @shouldCancelClick
+        @shouldCancelClick = false
         e.stopImmediatePropagation()
         false
-
 
     #
     # Draggable events
