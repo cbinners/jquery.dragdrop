@@ -315,6 +315,7 @@
 
       draggable.prototype.handleElementClick = function(e) {
         if (this.shouldCancelClick) {
+          this.shouldCancelClick = false;
           e.stopImmediatePropagation();
           return false;
         }
